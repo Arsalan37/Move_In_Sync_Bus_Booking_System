@@ -6,40 +6,34 @@
 using namespace std;
 
 #define YELLOW  "\033[33m"   // Set text color to yellow
-#define BLUE    "\033[34m"  // Set text color to blue
-#define MAGENTA "\033[35m"
-#define CYAN    "\033[36m"  // Set text color to cyan
 #define RESET   "\033[0m"    // Reset text color
 #define RED     "\033[31m"   // Set text color to red
-#define GREEN   "\033[32m"
+#define GREEN   "\033[32m"   // Set text color to green
 
 void adminMenu(vector<Bus>& buses) {
     Admin admin;
     int choice;
-
     while(true){    // Loop until the user chooses to exit
         cout << "\nAdmin Page:\n";
-        cout << "Press 1 to go back\n";
-        cout << "Press 2 to manage bus details\n";
+        cout << "Press 1 manage bus details\n";
+        cout << "Press 2 to go back\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
-        if(choice == 1){ // Back to main menu
+        if(choice == 1){ 
+            admin.adminPage(buses);
             break;
         }
         else if (choice == 2) 
         {
-            admin.adminPage(buses);
-            break;
-        }
+            return;
+            }  // Exit admin menu}
         else
         { // Invalid choice
                 cout << "Enter a valid choice.\n";
         }
     }
 }
-
-
 void displayMainMenu() { // Display the main menu
     cout<< "\nWelcome to Bus Booking System : Made By Shah Arsalan : 12102195\n";
     cout << "Press 1 to enter into User Mode \n";
@@ -54,7 +48,6 @@ void performUserActions(std::vector<Bus>& buses, User& currentUser) { // Perform
     while(true){
         std::cout << "\nUser Page:\n";
         std::cout << "Press 1 to check the available buses\n";
-        //std::cout << "Press 2 to check the seat availability\n";
         std::cout << "Press 2 to book a seat\n";
         std::cout << "Press 3 to Go back\n";
         std::cout << "Enter your choice: ";
@@ -67,12 +60,6 @@ void performUserActions(std::vector<Bus>& buses, User& currentUser) { // Perform
                 std::cout << "Enter destination: ";
                 std::cin >> destination;
                 currentUser.checkAvailableBuses(buses, source, destination);
-            } 
-        else if (choice == 10) {   // Check seat availability
-                int busIndex;
-                std::cout << "Enter the bus number: ";
-                std::cin >> busIndex;
-                currentUser.checkSeatAvailability(buses[busIndex - 1]);
             } 
         else if (choice == 2) {
                 int busIndex, seatNumber;
@@ -102,7 +89,6 @@ void userMenu(std::vector<Bus>& buses, std::vector<User>& users) {
     users.push_back(User("arsalan","1"));
     users.push_back(User("void","2"));
     bool foundUser = false;
-
     do {     // Loop until the user chooses to exit
         std::cout << "\nUser Menu:\n";
         std::cout << "Press 1 to Login\n";
@@ -152,7 +138,7 @@ int main() {
     std::vector<User> users; // Vector of users
 
     buses.push_back(Bus("moveinsync bus1", 5, "jammu-kashmir"));
-    buses.push_back(Bus("moveinsync bus4", 30, "punjab-amritsar"));
+    buses.push_back(Bus("moveinsync bus2", 30, "punjab-amritsar"));
 
     int choice;
 
@@ -160,19 +146,19 @@ int main() {
         displayMainMenu();
         std::cin >> choice;
 
-        if(choice == 1 ){
-                userMenu(buses,users);
+        switch (choice) {
+            case 1:
+                userMenu(buses, users);
                 break;
-        }
-        else if(choice == 2){
+            case 2:
                 adminMenu(buses);
                 break;
-        }
-        else if(choice == 3){
+            case 3:
                 std::cout << "Terminating the execution.\n";
-                break;}
-        else{
+                break;
+            default:
                 std::cout << "Enter a valid choice. Try again.\n";
+                break;
         }
     } while (choice != 3);
 

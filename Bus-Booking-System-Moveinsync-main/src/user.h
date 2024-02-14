@@ -18,12 +18,10 @@ public:
 
     const std::string& getUsername() const;
     const std::string& getPassword() const;
-    const std::vector<int>& getBookedSeats() const;
 
     bool authenticate(const std::string& enteredUsername, const std::string& enteredPassword) const; // Authenticate the user
 
     void checkAvailableBuses(const std::vector<Bus>& buses, const std::string& source, const std::string& destination);
-    void checkSeatAvailability(const Bus& bus);
     bool bookSeat(Bus& bus, int seatNumber);
 };
 

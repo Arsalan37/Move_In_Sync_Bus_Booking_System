@@ -16,9 +16,6 @@ const std::string& User::getPassword() const {  // Get the password
     return password;
 }
 
-const std::vector<int>& User::getBookedSeats() const {  // Get the booked seats
-    return bookedSeats;
-}
 
 void User::checkAvailableBuses(const std::vector<Bus>& buses, const std::string& source, const std::string& destination) {
     bool flag=false;                            // Check if the bus follows the specified route
@@ -52,26 +49,6 @@ void User::checkAvailableBuses(const std::vector<Bus>& buses, const std::string&
             std::cout << "\nNo buses are available from " << source << " to " << destination << "\n";  // No buses available
         }
 }
-
-void User::checkSeatAvailability(const Bus& bus) {
-    std::cout << "\nSeat Availability for " << bus.getBusName() << ":\n";
-
-    const std::vector<Seat>& seats = bus.getSeats();
-    for (const Seat& seat : seats) {     // Loop through all the seats
-        if (seat.isSeatBooked()) {
-            std::cout << "\033[31m";
-            std::cout << "Seat " << seat.getSeatNumber() << ": ";
-            std::cout << "Booked\n";
-            std::cout << "\033[0m";
-        } else {                             // Check if the seat is booked
-            std::cout << "\033[32m";
-            std::cout << "Seat " << seat.getSeatNumber() << ": ";
-            std::cout << "Available\n";
-            std::cout << "\033[0m";
-        }
-    }
-}
-
 bool User::bookSeat(Bus& bus, int seatNumber) {            // Book a seat
     if (seatNumber >= 1 && seatNumber <= bus.getTotalSeats()) {
         if (!bus.getSeats()[seatNumber - 1].isSeatBooked()) {
